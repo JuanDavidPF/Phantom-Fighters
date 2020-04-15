@@ -1,25 +1,112 @@
 fileFormatVersion: 2
-guid: 0327148a30c14ae4a8a537cddeb9a077
+guid: 0786bb97012cf4f4c9d3d8674a862072
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3611875357223114892
-    second: scafander_sprites_0
+      213: 3724800788644286752
+    second: kiryl_sprites_0
   - first:
-      213: -2975807348971843489
-    second: scafander_sprites_1
+      213: 3778512418536945508
+    second: kiryl_sprites_1
   - first:
-      213: 6117154624309063851
-    second: scafander_sprites_2
+      213: 8713581181574811942
+    second: kiryl_sprites_2
   - first:
-      213: 3550460729178735138
-    second: scafander_sprites_3
+      213: -8785918921994387674
+    second: kiryl_sprites_3
   - first:
-      213: -7924517105769003671
-    second: scafander_sprites_4
+      213: 1266401506340487282
+    second: kiryl_sprites_4
   - first:
-      213: -3315741809965419269
-    second: scafander_sprites_5
+      213: 4735863411972823427
+    second: kiryl_sprites_0
+  - first:
+      213: 2038820369349982211
+    second: kiryl_sprites_1
+  - first:
+      213: -7363274625262122352
+    second: kiryl_sprites_2
+  - first:
+      213: -8521603305048598675
+    second: kiryl_sprites_3
+  - first:
+      213: 2722039852638615969
+    second: kiryl_sprites_4
+  - first:
+      213: 1509016506946640865
+    second: kiryl_sprites_5
+  - first:
+      213: 1756992085867242973
+    second: kiryl_sprites_6
+  - first:
+      213: -5385615822569983063
+    second: kiryl_sprites_7
+  - first:
+      213: -4610429690326794618
+    second: kiryl_sprites_8
+  - first:
+      213: 2871353398374058791
+    second: kiryl_sprites_9
+  - first:
+      213: -1403598021485442883
+    second: kiryl_sprites_10
+  - first:
+      213: -3134719965035116600
+    second: kiryl_sprites_11
+  - first:
+      213: 5604135594866819727
+    second: kiryl_sprites_12
+  - first:
+      213: -3557769992677015974
+    second: kiryl_sprites_13
+  - first:
+      213: -3321758874621826063
+    second: kiryl_sprites_14
+  - first:
+      213: -320376687326444468
+    second: kiryl_sprites_15
+  - first:
+      213: -1633023007923955873
+    second: kiryl_sprites_16
+  - first:
+      213: -8390337848362815849
+    second: kiryl_sprites_17
+  - first:
+      213: 2367162166819592867
+    second: kiryl_sprites_18
+  - first:
+      213: -4941853038066748109
+    second: kiryl_sprites_19
+  - first:
+      213: -4696038230313520513
+    second: kiryl_sprites_20
+  - first:
+      213: -3649427199138968907
+    second: kiryl_sprites_21
+  - first:
+      213: 4127000242988511922
+    second: kiryl_sprites_22
+  - first:
+      213: -4296416592852000613
+    second: kiryl_sprites_23
+  - first:
+      213: 793841246693794298
+    second: kiryl_sprites_24
+  - first:
+      213: 5173030484975738694
+    second: kiryl_sprites_25
+  - first:
+      213: -2584343310378965804
+    second: kiryl_sprites_26
+  - first:
+      213: -8342803160420376057
+    second: kiryl_sprites_27
+  - first:
+      213: -5951850775638507547
+    second: kiryl_sprites_28
+  - first:
+      213: -5365650019504218320
+    second: kiryl_sprites_29
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -63,7 +150,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 15
+  spritePixelsToUnits: 75
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -105,13 +192,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: scafander_sprites_0
+      name: kiryl_sprites_0
       rect:
         serializedVersion: 2
-        x: 3
-        y: 3
-        width: 29
-        height: 30
+        x: 0
+        y: 30
+        width: 175
+        height: 110
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -119,104 +206,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c8855483085ff1230800000000000000
-      internalID: 3611875357223114892
+      spriteID: 389d8677eaa29b140800000000000000
+      internalID: 4735863411972823427
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: scafander_sprites_1
-      rect:
-        serializedVersion: 2
-        x: 40
-        y: 3
-        width: 29
-        height: 29
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f50598c8bfec3b6d0800000000000000
-      internalID: -2975807348971843489
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: scafander_sprites_2
-      rect:
-        serializedVersion: 2
-        x: 76
-        y: 3
-        width: 27
-        height: 29
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ba0741288bf74e450800000000000000
-      internalID: 6117154624309063851
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: scafander_sprites_3
-      rect:
-        serializedVersion: 2
-        x: 116
-        y: 3
-        width: 22
-        height: 29
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2224ca7d835c54130800000000000000
-      internalID: 3550460729178735138
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: scafander_sprites_4
-      rect:
-        serializedVersion: 2
-        x: 145
-        y: 3
-        width: 24
-        height: 28
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 965c12e9da5760290800000000000000
-      internalID: -7924517105769003671
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: scafander_sprites_5
+      name: kiryl_sprites_1
       rect:
         serializedVersion: 2
         x: 175
-        y: 3
-        width: 31
-        height: 28
+        y: 30
+        width: 175
+        height: 115
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -224,8 +227,92 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bf4b912346e1cf1d0800000000000000
-      internalID: -3315741809965419269
+      spriteID: 308bfe3e2585b4c10800000000000000
+      internalID: 2038820369349982211
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kiryl_sprites_2
+      rect:
+        serializedVersion: 2
+        x: 370
+        y: 15
+        width: 130
+        height: 145
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 09a8a999db460d990800000000000000
+      internalID: -7363274625262122352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kiryl_sprites_3
+      rect:
+        serializedVersion: 2
+        x: 530
+        y: 10
+        width: 150
+        height: 155
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d6798c581fe2db980800000000000000
+      internalID: -8521603305048598675
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kiryl_sprites_4
+      rect:
+        serializedVersion: 2
+        x: 705
+        y: 15
+        width: 175
+        height: 130
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a93bf0f2d0a6c520800000000000000
+      internalID: 2722039852638615969
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kiryl_sprites_5
+      rect:
+        serializedVersion: 2
+        x: 885
+        y: 15
+        width: 170
+        height: 140
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1eb51c8948a11f410800000000000000
+      internalID: 1509016506946640865
       vertices: []
       indices: 
       edges: []
