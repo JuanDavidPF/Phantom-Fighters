@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2609781655740844367}
   - component: {fileID: 2609781655740844364}
   m_Layer: 8
-  m_Name: Placeholder(Don't Move nor Scale)
+  m_Name: Placeholder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -89,7 +89,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2609781656076131062}
   m_Layer: 8
-  m_Name: PlatformSize (Scale but don't move)
+  m_Name: Placeholder Corner Mode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 2609781656319192638}
   m_Layer: 8
   m_Name: Platform
-  m_TagString: Untagged
+  m_TagString: Platforms
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

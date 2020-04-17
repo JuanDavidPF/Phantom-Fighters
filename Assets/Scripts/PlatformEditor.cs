@@ -2,37 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[SelectionBase]
 public class PlatformEditor : MonoBehaviour {
 
-    //Components
-    private BoxCollider2D hitbox;
-
-    //placeHolder
-    private Vector3 placeHolderDimensions;
-    private Vector3 placeHolderPosition;
     private int platformLength;
     private int platformHeight;
 
-    //Graphics
+    [Header ("Appearance")]
     public Sprite material;
 
     // Start is called before the first frame update
     void Start () {
 
-        //extract the dimensions and position of the placeholder modified in editor view.
-        placeHolderDimensions = transform.GetChild (0).GetComponent<Transform> ().localScale;
-        placeHolderPosition = transform.GetChild (0).GetComponent<Transform> ().position;
+        platformLength = (int) Mathf.Round (Mathf.Abs (transform.localScale.x));
+        platformHeight = (int) Mathf.Round (Mathf.Abs (transform.localScale.y));
 
-        platformLength = (int) Mathf.Round (placeHolderDimensions.x);
-        platformHeight = (int) Mathf.Round (placeHolderDimensions.y);
+        //fixes the position of the platform if is negative scaled
+        if (transform.localScale.x < 0) {
+            transform.position = new Vector3 (transform.localScale.x + transform.position.x, transform.position.y, transform.position.z);
+            transform.localScale = new Vector3 (Mathf.Abs (transform.localScale.x), transform.localScale.y, transform.localScale.z);
+        }
 
-        //adjust the hitbox to the dimensions of the placeholder
+        if (transform.localScale.y < 0) {
+            transform.position = new Vector3 (transform.position.x, transform.position.y - transform.localScale.y, transform.position.z);
+            transform.localScale = new Vector3 (transform.localScale.x, Mathf.Abs (transform.localScale.y), transform.localScale.z);
+        }
 
-        hitbox = GetComponent<BoxCollider2D> ();
-        hitbox.size = new Vector2 (platformLength, platformHeight);
-        hitbox.offset = new Vector2 (platformLength / 2f, -(platformHeight / 2f));
-
-        //create the tiles and fill the hitbox with them
+        //create the tiles and fill the platform with them
 
         for (int i = 0; i < platformLength; i++) {
             for (int j = 0; j < platformHeight; j++) {
@@ -44,10 +40,12 @@ public class PlatformEditor : MonoBehaviour {
             }
         }
 
-        //deactivates the placeholder
-        transform.GetChild (0).gameObject.SetActive (false);
-    } //close the start method
+        //deactivates the placeholder if there is a material set to it
 
-    // Update is called once per frame
+        if (material != null) {
+            transform.GetChild (0).gameObject.SetActive (false);
+        }
+
+    } //close the start method
 
 }
