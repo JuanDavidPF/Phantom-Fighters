@@ -11,7 +11,7 @@ public class PlatformEditor : MonoBehaviour {
     private int platformHeight;
 
     /////////////////////////Variables with predifined values///////////////
-    public enum Directions { vertical, horizontal, diagonal1, diagonal2 }
+    public enum Directions { horizontal, vertical, diagonal1, diagonal2 }
 
     /////////////////////////Apperance///////////////
     [Space (5)]
@@ -27,18 +27,46 @@ public class PlatformEditor : MonoBehaviour {
     public bool itMoves;
 
     [Tooltip ("Sets the direction in wich the platform it's going to move")]
-    public Directions direction;
+    public Directions direction = Directions.horizontal;
 
-    [Tooltip ("Control of the animation of the platform")]
-    public RuntimeAnimatorController movementController;
+    [Tooltip ("Reflects the axis of the movement")]
+    public bool invertDirection;
 
-    private int indexDirection;
+    [Space (15)]
+    [Range (1, 35)]
+    [Tooltip ("How much units the platform it's going to travel horizontally")]
+    public float displacementHorizontalUnits = 7;
+    [Range (1, 30)]
+    [Tooltip ("How much units the platform it's going to travel vertically")]
+    public float displacementVerticalUnits = 3;
+    [HideInInspector]
+    public float platformHorizontalDirection;
+    [HideInInspector]
+    public float platformVerticalDirection;
+    private float clock;
+    private float seconds;
+    private float countDown;
+    private string movementPhase;
+    private Vector3 originalPosition;
+
+    [Space (15)]
+
+    [Range (1, 10)]
+    [Tooltip ("How much seconds will take, before the platform starts its loop")]
+    public float delayStart = 1;
+
+    [Range (1, 30)]
+    [Tooltip ("How much seconds the platform takes to go from PointA to PointB and vice versa")]
+    public float secondsOfMovement = 10;
+
+    [Range (1, 10)]
+    [Tooltip ("How much seconds the platform stays stand still in pointA and pointB")]
+    public float secondsOfStandBy = 3;
 
     /////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////
+
     void Start () {
 
         //determines the size of the platform, the size is in unity units, so the dimensions need to be positive, rounded integers.
@@ -71,40 +99,240 @@ public class PlatformEditor : MonoBehaviour {
         //deactivates the placeholder if a sprite material was atached to the platform
 
         if (material != null) {
-            transform.GetChild (0).gameObject.SetActive (false);
+            Destroy (transform.GetChild (0).gameObject);
         }
 
-        //creates the animator component and moves the platform to aparent gameobject to unfix the platform animated original position
+        //deactivates the placeholder of movement if the platform moves
+
+        if (itMoves) {
+            Destroy (transform.GetChild (1).gameObject);
+        }
+
+        //saves the original position of the platform
+
+        originalPosition = transform.position;
+
+        //initialize the movement phase
+        movementPhase = "AtoB";
+
+        //The delay start is aplied
+        clock -= delayStart;
+
+    } //close the start method
+
+    /////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////
+
+    void Update () {
+
+        //manages the seconds counter
+
+        clock += Time.deltaTime;
+        seconds = (int) Mathf.Round (clock % 60);
+
         if (itMoves) {
 
-            GameObject mobilePlatform = new GameObject ("MobilePlatform");
-            mobilePlatform.transform.position = transform.position;
-            transform.parent = mobilePlatform.transform;
-            gameObject.AddComponent<Animator> ();
-            Animator animate = GetComponent<Animator> ();
-            animate.runtimeAnimatorController = movementController;
+            Move ();
 
-            switch (direction) {
+        } //closes the condition of moving
+    } //closes the method Update
 
-                case Directions.vertical:
-                    indexDirection = 1;
-                    break;
-                case Directions.horizontal:
-                    indexDirection = 2;
-                    break;
-                case Directions.diagonal1:
-                    indexDirection = 3;
-                    break;
-                case Directions.diagonal2:
-                    indexDirection = 4;
-                    break;
-            }
-            animate.SetInteger ("direction", indexDirection);
-        }
-    } //close the start method
     /////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////
+
+    void Move () {
+
+        switch (direction) {
+
+            case Directions.horizontal:
+
+                switch (movementPhase) {
+
+                    case "AtoB":
+
+                        if (seconds >= secondsOfStandBy) {
+
+                            float x = transform.position.x;
+                            if (!invertDirection && x > originalPosition.x - platformHorizontalDirection) x -= (platformHorizontalDirection / secondsOfMovement * Time.deltaTime);
+                            else if (invertDirection && x < originalPosition.x - platformHorizontalDirection) x -= (platformHorizontalDirection / secondsOfMovement * Time.deltaTime);
+
+                            transform.position = new Vector3 (x, transform.position.y, transform.position.z);
+
+                            if (seconds >= secondsOfStandBy + secondsOfMovement) {
+                                clock = 0;
+                                movementPhase = "BtoA";
+                            }
+                        }
+                        break;
+
+                    case "BtoA":
+
+                        if (seconds >= secondsOfStandBy) {
+
+                            float x = transform.position.x;
+                            if (!invertDirection && x < originalPosition.x) x += platformHorizontalDirection / secondsOfMovement * Time.deltaTime * 1f;
+                            else if (invertDirection && x > originalPosition.x) x += platformHorizontalDirection / secondsOfMovement * Time.deltaTime * 1f;
+
+                            transform.position = new Vector3 (x, transform.position.y, transform.position.z);
+                            if (seconds >= secondsOfStandBy + secondsOfMovement) {
+                                clock = 0;
+                                movementPhase = "AtoB";
+                            }
+                        }
+                        break;
+
+                } //closes the switch of the phase
+
+                break;
+
+            case Directions.vertical:
+
+                switch (movementPhase) {
+
+                    case "AtoB":
+
+                        if (seconds >= secondsOfStandBy) {
+
+                            float y = transform.position.y;
+                            if (!invertDirection && y > originalPosition.y - platformVerticalDirection) y -= (platformVerticalDirection / secondsOfMovement * Time.deltaTime);
+                            else if (invertDirection && y < originalPosition.y - platformVerticalDirection) y -= (platformVerticalDirection / secondsOfMovement * Time.deltaTime);
+                            transform.position = new Vector3 (transform.position.x, y, transform.position.z);
+
+                            if (seconds >= secondsOfStandBy + secondsOfMovement) {
+                                clock = 0;
+                                movementPhase = "BtoA";
+                            }
+                        }
+                        break;
+
+                    case "BtoA":
+
+                        if (seconds >= secondsOfStandBy) {
+
+                            float y = transform.position.y;
+                            if (!invertDirection && y < originalPosition.y) y += platformVerticalDirection / secondsOfMovement * Time.deltaTime;
+                            else if (invertDirection && y > originalPosition.y) y += platformVerticalDirection / secondsOfMovement * Time.deltaTime;
+                            transform.position = new Vector3 (transform.position.x, y, transform.position.z);
+
+                            if (seconds >= secondsOfStandBy + secondsOfMovement) {
+                                clock = 0;
+                                movementPhase = "AtoB";
+                            }
+                        }
+                        break;
+
+                } //closes the switch of the phase
+
+                break;
+
+            case Directions.diagonal1:
+
+                switch (movementPhase) {
+
+                    case "AtoB":
+
+                        if (seconds >= secondsOfStandBy) {
+
+                            float x = transform.position.x;
+                            if (!invertDirection && x > originalPosition.x - platformHorizontalDirection) x -= (platformHorizontalDirection / secondsOfMovement * Time.deltaTime);
+                            else if (invertDirection && x < originalPosition.x - platformHorizontalDirection) x -= (platformHorizontalDirection / secondsOfMovement * Time.deltaTime);
+                            transform.position = new Vector3 (x, transform.position.y, transform.position.z);
+
+                            float y = transform.position.y;
+                            if (!invertDirection && y > originalPosition.y - platformVerticalDirection) y += (platformVerticalDirection / secondsOfMovement * Time.deltaTime);
+                            else if (invertDirection && y < originalPosition.y - platformVerticalDirection) y += (platformVerticalDirection / secondsOfMovement * Time.deltaTime);
+                            transform.position = new Vector3 (transform.position.x, y, transform.position.z);
+
+                            if (seconds >= secondsOfStandBy + secondsOfMovement) {
+                                clock = 0;
+                                movementPhase = "BtoA";
+                            }
+                        }
+                        break;
+
+                    case "BtoA":
+
+                        if (seconds >= secondsOfStandBy) {
+
+                            float x = transform.position.x;
+                            if (!invertDirection && x < originalPosition.x) x += platformHorizontalDirection / secondsOfMovement * Time.deltaTime;
+                            else if (invertDirection && x > originalPosition.x) x += platformHorizontalDirection / secondsOfMovement * Time.deltaTime;
+                            transform.position = new Vector3 (x, transform.position.y, transform.position.z);
+
+                            float y = transform.position.y;
+                            if (!invertDirection && y > originalPosition.y) y -= platformVerticalDirection / secondsOfMovement * Time.deltaTime;
+                            else if (invertDirection && y < originalPosition.y) y -= platformVerticalDirection / secondsOfMovement * Time.deltaTime;
+                            transform.position = new Vector3 (transform.position.x, y, transform.position.z);
+
+                            if (seconds >= secondsOfStandBy + secondsOfMovement) {
+                                clock = 0;
+                                movementPhase = "AtoB";
+                            }
+                        }
+                        break;
+
+                } //closes the switch of the phase
+
+                break;
+
+            case Directions.diagonal2:
+
+                switch (movementPhase) {
+
+                    case "AtoB":
+
+                        if (seconds >= secondsOfStandBy) {
+
+                            float x = transform.position.x;
+                            if (!invertDirection && x > originalPosition.x - platformHorizontalDirection) x -= (platformHorizontalDirection / secondsOfMovement * Time.deltaTime);
+                            else if (invertDirection && x < originalPosition.x - platformHorizontalDirection) x -= (platformHorizontalDirection / secondsOfMovement * Time.deltaTime);
+                            transform.position = new Vector3 (x, transform.position.y, transform.position.z);
+
+                            float y = transform.position.y;
+                            if (!invertDirection && y > originalPosition.y - platformVerticalDirection) y -= (platformVerticalDirection / secondsOfMovement * Time.deltaTime);
+                            else if (invertDirection && y < originalPosition.y - platformVerticalDirection) y -= (platformVerticalDirection / secondsOfMovement * Time.deltaTime);
+                            transform.position = new Vector3 (transform.position.x, y, transform.position.z);
+
+                            if (seconds >= secondsOfStandBy + secondsOfMovement) {
+                                clock = 0;
+                                movementPhase = "BtoA";
+                            }
+                        }
+                        break;
+
+                    case "BtoA":
+
+                        if (seconds >= secondsOfStandBy) {
+
+                            float x = transform.position.x;
+                            if (!invertDirection && x < originalPosition.x) x += platformHorizontalDirection / secondsOfMovement * Time.deltaTime;
+                            else if (invertDirection && x > originalPosition.x) x += platformHorizontalDirection / secondsOfMovement * Time.deltaTime;
+                            transform.position = new Vector3 (x, transform.position.y, transform.position.z);
+
+                            float y = transform.position.y;
+                            if (!invertDirection && y < originalPosition.y) y += platformVerticalDirection / secondsOfMovement * Time.deltaTime;
+                            else if (invertDirection && y > originalPosition.y) y += platformVerticalDirection / secondsOfMovement * Time.deltaTime;
+                            transform.position = new Vector3 (transform.position.x, y, transform.position.z);
+
+                            if (seconds >= secondsOfStandBy + secondsOfMovement) {
+                                clock = 0;
+                                movementPhase = "AtoB";
+                            }
+                        }
+                        break;
+
+                } //closes the switch of the phase
+
+                break;
+
+        } //closes the switch of the direction
+
+    }
+
     /////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////
+
 } //closes the class PlatformEditor
