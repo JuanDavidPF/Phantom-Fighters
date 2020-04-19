@@ -9,6 +9,7 @@ public class PlayerScript : MonoBehaviour {
 
     [HideInInspector]
     public bool isGamePaused;
+    public bool isOutOfBounds;
 
     /////////////////////////Components///////////////
     private Rigidbody2D physics;
@@ -83,12 +84,14 @@ public class PlayerScript : MonoBehaviour {
     /////////////////////////////Health////////////////////////////////
     [Space (5)]
     [Header ("Healt")]
-    [Tooltip ("Links the health level to an interface healthbar")]
-    public HealthBar healthBar;
-    [Tooltip ("What's the maximum health of the player")]
+    [Tooltip ("How many times the player is able to die and respawn")]
+    public int lives;
+    [Tooltip ("What 's the maximum health of the player")]
     [Range (2000, 4000)]
     public int maxHealth = 2000;
     private int health;
+    [Tooltip ("Links the health level to an interface healthbar ")]
+    public HealthBar healthBar;
     /////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////
@@ -118,7 +121,7 @@ public class PlayerScript : MonoBehaviour {
 
         //fill the healthbar
         health = maxHealth;
-        healthBar.SetMaxHealth (maxHealth);
+        if (healthBar != null) healthBar.SetMaxHealth (maxHealth);
 
     } //closes start method
 
@@ -134,7 +137,7 @@ public class PlayerScript : MonoBehaviour {
 
         //////////////////////////////////Ground Check///////////////////////////////////
 
-        Grounded ();
+        StartCoroutine (Grounded ());
 
     } //closes fixedUpdate method
 
@@ -190,6 +193,12 @@ public class PlayerScript : MonoBehaviour {
                 }
             } //closes the grounded condition
 
+            //the player fell down or escaped the gameSpace
+            if (isOutOfBounds) {
+                takeDamage ((int) Mathf.Round (maxHealth / 3 * Time.deltaTime));
+
+            }
+
         } //closes the pause condition
 
     } //closes the update method
@@ -230,10 +239,11 @@ public class PlayerScript : MonoBehaviour {
     /////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////
 
-    void Grounded () {
+    IEnumerator Grounded () {
         //Detect if the player is on the ground
         isGrounded = Physics2D.OverlapCircle (groundCheck.position, groundCheckRadius, whatIsGround);
         animate.SetBool ("grounded", isGrounded);
+        yield return null;
     }
 
     /////////////////////////////////////////////////////////////////////////////////////
@@ -264,7 +274,12 @@ public class PlayerScript : MonoBehaviour {
 
     void takeDamage (int damage) {
         health -= damage;
-        healthBar.SetHealth (health);
+        if (health <= 0) {
+            isOutOfBounds = false;
+
+        }
+
+        if (healthBar != null) healthBar.SetHealth (health);
 
     }
 

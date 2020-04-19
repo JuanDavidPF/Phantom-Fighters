@@ -111,6 +111,9 @@ MonoBehaviour:
   delayStart: 1
   secondsOfMovement: 3
   secondsOfStandBy: 3
+  itTeleports: 0
+  linkedPortal: {fileID: 0}
+  portalCooldown: 0
 --- !u!114 &6564512401565139202
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,6 +172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   space: 1
   FreezePosition: 1
+  FreezeScale: 1
   FreezeRotation: 1
 --- !u!1 &3975162661259596601
 GameObject:
@@ -264,4 +268,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   space: 1
   FreezePosition: 1
+  FreezeScale: 1
   FreezeRotation: 1

@@ -98,6 +98,8 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
+  healthBar: {fileID: 0}
+  maxHealth: 2000
 --- !u!1 &5251079540230307734
 GameObject:
   m_ObjectHideFlags: 0
@@ -143,6 +145,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   space: 1
   FreezePosition: 1
+  FreezeScale: 1
   FreezeRotation: 1
 --- !u!1 &5251079540574892276
 GameObject:
@@ -261,6 +264,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   space: 1
   FreezePosition: 1
+  FreezeScale: 1
   FreezeRotation: 1
 --- !u!1 &7194417223477453327
 GameObject:
@@ -308,6 +312,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   space: 1
   FreezePosition: 1
+  FreezeScale: 1
   FreezeRotation: 1
 --- !u!61 &226431651123015125
 BoxCollider2D:

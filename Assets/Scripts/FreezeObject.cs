@@ -5,12 +5,15 @@ using UnityEngine;
 public class FreezeObject : MonoBehaviour {
     public Space space = Space.World;
     public bool FreezePosition = false;
+
     public bool FreezeRotation = false;
 
     private Space m_OldSpace = Space.World;
     private bool m_OldFreezePosition = false;
     private bool m_OldFreezeRotation = false;
+
     private Vector3 m_Position = Vector3.zero;
+
     private Quaternion m_Rotation = Quaternion.identity;
 
     /////////////////////////////////////////////////////////////////////////////////////
@@ -54,6 +57,7 @@ public class FreezeObject : MonoBehaviour {
             else
                 transform.localRotation = m_Rotation;
         }
+
         m_OldSpace = space;
         m_OldFreezePosition = FreezePosition;
         m_OldFreezeRotation = FreezeRotation;
