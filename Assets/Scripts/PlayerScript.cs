@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [SelectionBase]
-public class PlayerMovement : MonoBehaviour {
+public class PlayerScript : MonoBehaviour {
 
     /////////////////////////Global determinations///////////////
 
@@ -80,6 +80,15 @@ public class PlayerMovement : MonoBehaviour {
     private string jumpBtn;
     private string WalkBtn;
 
+    /////////////////////////////Health////////////////////////////////
+    [Space (5)]
+    [Header ("Healt")]
+    [Tooltip ("Links the health level to an interface healthbar")]
+    public HealthBar healthBar;
+    [Tooltip ("What's the maximum health of the player")]
+    [Range (2000, 4000)]
+    public int maxHealth = 2000;
+    private int health;
     /////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////
@@ -106,6 +115,11 @@ public class PlayerMovement : MonoBehaviour {
 
         //converts seconds to frames
         jumpChargeTimer = jumpChargeTimer * 60;
+
+        //fill the healthbar
+        health = maxHealth;
+        healthBar.SetMaxHealth (maxHealth);
+
     } //closes start method
 
     /////////////////////////////////////////////////////////////////////////////////////
@@ -194,6 +208,7 @@ public class PlayerMovement : MonoBehaviour {
     /////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////
     IEnumerator Jump () {
+
         jumpCharge = ChangeNumberScale (jumpCharge, 0, jumpChargeTimer, jumpBoostInterval.x, jumpBoostInterval.y);
         physics.AddForce (new Vector2 (0, jumpForce * jumpCharge));
         jumpCharge = 0;
@@ -230,7 +245,7 @@ public class PlayerMovement : MonoBehaviour {
         if (collider.gameObject.CompareTag ("Platforms")) {
             transform.parent = collider.transform;
         }
-    } //metodo OnTrigger
+    } //closes method OnTrigger enter
 
     /////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////
@@ -242,7 +257,17 @@ public class PlayerMovement : MonoBehaviour {
         if (collider.gameObject.CompareTag ("Platforms")) {
             transform.parent = null;
         }
+    } //closes method OnTrigger exit
+    /////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////
+
+    void takeDamage (int damage) {
+        health -= damage;
+        healthBar.SetHealth (health);
+
     }
+
     /////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////
@@ -251,5 +276,5 @@ public class PlayerMovement : MonoBehaviour {
     float ChangeNumberScale (float valueToMap, float initialScaleMin, float initialScaleMax, float finalScaleMin, float finalScaleMax) {
         float MappedValue = finalScaleMin + (valueToMap - initialScaleMin) * (finalScaleMax - finalScaleMin) / (initialScaleMax - initialScaleMin);
         return MappedValue;
-    }
+    } //closes method ChangeNumberscale
 } //closes player movement class

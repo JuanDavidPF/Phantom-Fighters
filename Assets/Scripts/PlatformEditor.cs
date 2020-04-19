@@ -51,17 +51,35 @@ public class PlatformEditor : MonoBehaviour {
 
     [Space (15)]
 
-    [Range (1, 10)]
+    [Range (0, 10)]
     [Tooltip ("How much seconds will take, before the platform starts its loop")]
     public float delayStart = 1;
 
-    [Range (1, 30)]
+    [Range (0, 30)]
     [Tooltip ("How much seconds the platform takes to go from PointA to PointB and vice versa")]
     public float secondsOfMovement = 10;
 
-    [Range (1, 10)]
+    [Range (0, 10)]
     [Tooltip ("How much seconds the platform stays stand still in pointA and pointB")]
     public float secondsOfStandBy = 3;
+
+    /////////////////////////Teleportation///////////////
+
+    [Space (5)]
+    [Header ("Teleportation")]
+    [Tooltip ("Allows this platform to teleport")]
+    public bool itTeleports;
+
+    [Tooltip ("Link to the destination platform")]
+    public GameObject linkedPortal;
+
+    [Tooltip ("How many seconds the player has to stand in the platform before he gets teleported")]
+    [Range (0, 5)]
+    public float portalCooldown;
+    private float portalCharging;
+    private bool isSending;
+    private bool isReceiving;
+    private GameObject playerTeleporting;
 
     /////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////
@@ -117,6 +135,9 @@ public class PlatformEditor : MonoBehaviour {
 
         //The delay start is aplied
         clock -= delayStart;
+
+        //the ability to teleport sets off if a secondary platform wasn't linked to it. Else, it linkes itself to the other platform
+        if (itTeleports && linkedPortal == null) itTeleports = false;
 
     } //close the start method
 
@@ -331,6 +352,56 @@ public class PlatformEditor : MonoBehaviour {
 
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////
+    void Teleport (GameObject player) {
+        portalCharging += Time.deltaTime;
+        isSending = true;
+        linkedPortal.GetComponent<PlatformEditor> ().isReceiving = true;
+
+        if (Mathf.Round (portalCharging % 60) >= portalCooldown) {
+            portalCharging = 0f;
+            player.transform.position = new Vector3 (linkedPortal.transform.position.x + linkedPortal.transform.localScale.x / 2, linkedPortal.transform.position.y, linkedPortal.transform.position.z);
+            isSending = false;
+
+        }
+    } //closes teleport
+
+    /////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////
+
+    void OnTriggerStay2D (Collider2D collider) {
+
+        if (playerTeleporting == null && collider.gameObject.CompareTag ("Player")) {
+            playerTeleporting = collider.gameObject;
+        }
+
+        if (playerTeleporting == collider.gameObject && itTeleports) {
+
+            if (!isReceiving && linkedPortal.GetComponent<PlatformEditor> ().isSending == false) {
+
+                Teleport (collider.gameObject);
+            }
+        }
+
+    } //closes method OnTrigger enter
+
+    /////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////
+
+    void OnTriggerExit2D (Collider2D collider) {
+
+        if (playerTeleporting == collider.gameObject && itTeleports) {
+            isReceiving = false;
+            isSending = false;
+            portalCharging = 0f;
+            playerTeleporting = null;
+
+        }
+    } //closes method OnTrigger exit
     /////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////
