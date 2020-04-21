@@ -1,25 +1,31 @@
 fileFormatVersion: 2
-guid: 0327148a30c14ae4a8a537cddeb9a077
+guid: 1c6294caf84933343ab54227ae4f8b2f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3611875357223114892
-    second: scafander_sprites_0
+      213: 3747089691192616674
+    second: Scafander_0
   - first:
-      213: -2975807348971843489
-    second: scafander_sprites_1
+      213: 6632144595856698314
+    second: Scafander_1
   - first:
-      213: 6117154624309063851
-    second: scafander_sprites_2
+      213: -6082017688154846155
+    second: Scafander_2
   - first:
-      213: 3550460729178735138
-    second: scafander_sprites_3
+      213: 8303701331552109461
+    second: Scafander_3
   - first:
-      213: -7924517105769003671
-    second: scafander_sprites_4
+      213: -3328682961506264153
+    second: Scafander_4
   - first:
-      213: -3315741809965419269
-    second: scafander_sprites_5
+      213: -2357194351553081812
+    second: Scafander_5
+  - first:
+      213: 8867807635071167039
+    second: Scafander_6
+  - first:
+      213: -363381949501065976
+    second: Scafander_7
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -63,7 +69,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 15
+  spritePixelsToUnits: 80
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -105,13 +111,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: scafander_sprites_0
+      name: Scafander_0
       rect:
         serializedVersion: 2
-        x: 3
-        y: 3
-        width: 29
-        height: 30
+        x: 20
+        y: 5
+        width: 145
+        height: 160
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -119,20 +125,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c8855483085ff1230800000000000000
-      internalID: 3611875357223114892
+      spriteID: 2e66011a836500430800000000000000
+      internalID: 3747089691192616674
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: scafander_sprites_1
+      name: Scafander_1
       rect:
         serializedVersion: 2
-        x: 40
-        y: 3
-        width: 29
-        height: 29
+        x: 200
+        y: 10
+        width: 145
+        height: 155
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -140,92 +146,134 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f50598c8bfec3b6d0800000000000000
-      internalID: -2975807348971843489
+      spriteID: acba01f0f5c1a0c50800000000000000
+      internalID: 6632144595856698314
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: scafander_sprites_2
+      name: Scafander_2
       rect:
         serializedVersion: 2
-        x: 76
-        y: 3
-        width: 27
-        height: 29
+        x: 375
+        y: 10
+        width: 140
+        height: 155
       alignment: 9
-      pivot: {x: 0.5687937, y: -0.000000049327983}
+      pivot: {x: 0.55962, y: -0.0028342155}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ba0741288bf74e450800000000000000
-      internalID: 6117154624309063851
+      spriteID: 53c43e3f225589ba0800000000000000
+      internalID: -6082017688154846155
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: scafander_sprites_3
+      name: Scafander_3
       rect:
         serializedVersion: 2
-        x: 116
-        y: 3
-        width: 22
-        height: 29
+        x: 575
+        y: 10
+        width: 120
+        height: 155
       alignment: 9
-      pivot: {x: 0.3578044, y: 0.0033709675}
+      pivot: {x: 0.39383343, y: 0.000000030763687}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2224ca7d835c54130800000000000000
-      internalID: 3550460729178735138
+      spriteID: 5930a1cbd5cac3370800000000000000
+      internalID: 8303701331552109461
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: scafander_sprites_4
+      name: Scafander_4
       rect:
         serializedVersion: 2
-        x: 145
-        y: 3
-        width: 24
-        height: 28
+        x: 720
+        y: 10
+        width: 130
+        height: 150
       alignment: 9
-      pivot: {x: 0.4551932, y: -0.000000051089696}
+      pivot: {x: 0.45606878, y: 0.0029287592}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 965c12e9da5760290800000000000000
-      internalID: -7924517105769003671
+      spriteID: 7ab168d8b742ec1d0800000000000000
+      internalID: -3328682961506264153
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: scafander_sprites_5
+      name: Scafander_5
       rect:
         serializedVersion: 2
-        x: 175
-        y: 3
-        width: 31
-        height: 28
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+        x: 870
+        y: 10
+        width: 165
+        height: 150
+      alignment: 9
+      pivot: {x: 0.4946744, y: 0.000000031789146}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bf4b912346e1cf1d0800000000000000
-      internalID: -3315741809965419269
+      spriteID: c2e0f19e930994fd0800000000000000
+      internalID: -2357194351553081812
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Scafander_6
+      rect:
+        serializedVersion: 2
+        x: 1040
+        y: 5
+        width: 140
+        height: 155
+      alignment: 9
+      pivot: {x: 0.6663086, y: -0.0056684893}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3ae9e87f08c01b70800000000000000
+      internalID: 8867807635071167039
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Scafander_7
+      rect:
+        serializedVersion: 2
+        x: 1215
+        y: 5
+        width: 170
+        height: 160
+      alignment: 9
+      pivot: {x: 0.60853416, y: -0.019219741}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 805333eca0205faf0800000000000000
+      internalID: -363381949501065976
       vertices: []
       indices: 
       edges: []

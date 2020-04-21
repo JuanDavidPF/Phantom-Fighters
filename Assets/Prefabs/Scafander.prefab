@@ -86,6 +86,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isGamePaused: 0
+  isOutOfBounds: 0
   playerIndex: 1
   character: 1
   moveSpeed: 9
@@ -98,8 +99,10 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
-  healthBar: {fileID: 0}
+  lives: 0
   maxHealth: 2000
+  healthBar: {fileID: 0}
+  respawnCountdown: 0
 --- !u!1 &2396740892049675753
 GameObject:
   m_ObjectHideFlags: 0
@@ -145,7 +148,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   space: 1
   FreezePosition: 1
-  FreezeScale: 1
   FreezeRotation: 1
 --- !u!1 &2396740893704846699
 GameObject:
@@ -219,13 +221,13 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 3611875357223114892, guid: 0327148a30c14ae4a8a537cddeb9a077,
+  m_Sprite: {fileID: 3747089691192616674, guid: 1c6294caf84933343ab54227ae4f8b2f,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.0725, y: 0.075}
+  m_Size: {x: 1.45, y: 1.6}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -264,7 +266,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   space: 1
   FreezePosition: 1
-  FreezeScale: 1
   FreezeRotation: 1
 --- !u!1 &6295981730453231675
 GameObject:
@@ -338,5 +339,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   space: 1
   FreezePosition: 1
-  FreezeScale: 1
   FreezeRotation: 1

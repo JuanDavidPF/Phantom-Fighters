@@ -92,6 +92,11 @@ public class PlayerScript : MonoBehaviour {
     private int health;
     [Tooltip ("Links the health level to an interface healthbar ")]
     public HealthBar healthBar;
+
+    [Tooltip ("How many seconds does the player has to wait to respawn")]
+    [Range (1, 10)]
+    public int respawnCountdown;
+    private bool itLives;
     /////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////
@@ -120,6 +125,7 @@ public class PlayerScript : MonoBehaviour {
         jumpChargeTimer = jumpChargeTimer * 60;
 
         //fill the healthbar
+        itLives = true;
         health = maxHealth;
         if (healthBar != null) healthBar.SetMaxHealth (maxHealth);
 
@@ -147,7 +153,7 @@ public class PlayerScript : MonoBehaviour {
 
     void Update () {
 
-        if (!isGamePaused) {
+        if (!isGamePaused && itLives) {
 
             //flip the sprite in the direction the player is facing
             if ((moveDirection > 0 && !isFacingRight) || (moveDirection < 0 && isFacingRight)) {
@@ -193,9 +199,9 @@ public class PlayerScript : MonoBehaviour {
                 }
             } //closes the grounded condition
 
-            //the player fell down or escaped the gameSpace
+            //the player fell down or escaped the gameSpace and its life will drain on a second
             if (isOutOfBounds) {
-                takeDamage ((int) Mathf.Round (maxHealth / 3 * Time.deltaTime));
+                takeDamage ((int) Mathf.Round (maxHealth / 1f * Time.deltaTime));
 
             }
 
@@ -276,13 +282,46 @@ public class PlayerScript : MonoBehaviour {
         health -= damage;
         if (health <= 0) {
             isOutOfBounds = false;
-
+            Die ();
         }
 
         if (healthBar != null) healthBar.SetHealth (health);
 
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////
+
+    void Die () {
+        itLives = false;
+        lives -= 1;
+
+        if (lives > 0) {
+            StartCoroutine (Spawn (new Vector3 (0, 0, 0)));
+        }
+
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////
+
+    IEnumerator Spawn (Vector3 spawnPosition) {
+
+        while (health < maxHealth) {
+            yield return new WaitForSeconds (1 / 60);
+            health += (int) (maxHealth / respawnCountdown * Time.deltaTime);
+            healthBar.SetHealth (health);
+
+        }
+
+        health = maxHealth;
+        itLives = true;
+        transform.position = spawnPosition;
+        physics.velocity = new Vector3 (0, 0, 0);
+        yield return null;
+    }
     /////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////
