@@ -246,6 +246,7 @@ public class PlayerScript : MonoBehaviour {
     /////////////////////////////////////////////////////////////////////////////////////
 
     IEnumerator Grounded () {
+
         //Detect if the player is on the ground
         isGrounded = Physics2D.OverlapCircle (groundCheck.position, groundCheckRadius, whatIsGround);
         animate.SetBool ("grounded", isGrounded);
@@ -279,19 +280,21 @@ public class PlayerScript : MonoBehaviour {
     /////////////////////////////////////////////////////////////////////////////////////
 
     void takeDamage (int damage) {
-        health -= damage;
-        if (health <= 0) {
-            isOutOfBounds = false;
-            Die ();
+
+        if (itLives && !isGamePaused) {
+            health -= damage;
+            if (health <= 0) {
+                isOutOfBounds = false;
+                Die ();
+            }
+
+            if (healthBar != null) healthBar.SetHealth (health);
         }
-
-        if (healthBar != null) healthBar.SetHealth (health);
-
     }
 
     /////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////d//////
 
     void Die () {
         itLives = false;
@@ -311,7 +314,7 @@ public class PlayerScript : MonoBehaviour {
 
         while (health < maxHealth) {
             yield return new WaitForSeconds (1 / 60);
-            health += (int) (maxHealth / respawnCountdown * Time.deltaTime);
+            health += (int) Mathf.Round (maxHealth / respawnCountdown * Time.deltaTime);
             healthBar.SetHealth (health);
 
         }

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8990240189503875270}
   - component: {fileID: 5874409889235818706}
   - component: {fileID: 2121536720758757505}
-  - component: {fileID: 6564512401565139202}
+  - component: {fileID: 8064803997181150491}
   m_Layer: 8
   m_Name: Platform
   m_TagString: Platforms
@@ -102,19 +102,15 @@ MonoBehaviour:
   material: {fileID: 8769244495592423625, guid: 5deb9f9d05196c24d8b6c12eb89858b8,
     type: 3}
   itMoves: 0
-  direction: 0
-  invertDirection: 0
-  displacementHorizontalUnits: 3
-  displacementVerticalUnits: 3
-  platformHorizontalDirection: 0
-  platformVerticalDirection: 0
-  delayStart: 1
+  displacementHorizontalUnits: 0
+  displacementVerticalUnits: 0
+  delayStart: 0
   secondsOfMovement: 3
   secondsOfStandBy: 3
   itTeleports: 0
   linkedPortal: {fileID: 0}
-  portalCooldown: 0
---- !u!114 &6564512401565139202
+  portalCooldown: 3
+--- !u!114 &8064803997181150491
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -123,9 +119,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2129746037065523845}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37c0206efc765854f84a74495f943e25, type: 3}
+  m_Script: {fileID: 11500000, guid: ff037c4199313e443bf2360a09f83a69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  space: 0
+  FreezePosition: 0
+  FreezeRotation: 1
 --- !u!1 &3330801433853077207
 GameObject:
   m_ObjectHideFlags: 0
@@ -172,7 +171,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   space: 1
   FreezePosition: 1
-  FreezeScale: 1
   FreezeRotation: 1
 --- !u!1 &3975162661259596601
 GameObject:
@@ -268,5 +266,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   space: 1
   FreezePosition: 1
-  FreezeScale: 1
   FreezeRotation: 1

@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 2396740891944584395}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 8.488696, y: 0.1773107, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.25, y: 1.3125, z: 1}
   m_Children:
   - {fileID: 7579993637312159402}
   - {fileID: 2396740893704846697}
@@ -87,22 +87,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isGamePaused: 0
   isOutOfBounds: 0
-  playerIndex: 1
+  playerIndex: 0
   character: 1
   moveSpeed: 9
   isFacingRight: 1
   jumpForce: 13
-  jumpChargeTimer: 1
+  jumpChargeTimer: 0.5
   jumpBoostInterval: {x: 100, y: 170}
   groundCheck: {fileID: 2396740892049675752}
   groundCheckRadius: 0.3
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
-  lives: 0
+  lives: 3
   maxHealth: 2000
   healthBar: {fileID: 0}
-  respawnCountdown: 0
+  respawnCountdown: 3
 --- !u!1 &2396740892049675753
 GameObject:
   m_ObjectHideFlags: 0
