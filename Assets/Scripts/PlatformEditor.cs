@@ -103,7 +103,7 @@ public class PlatformEditor : MonoBehaviour {
             Destroy (transform.GetChild (0).gameObject);
         }
 
-        //the ability to teleport sets off if a secondary platform wasn't linked to it. Else, it linkes itself to the other platform
+        //the ability to teleport sets off if a secondary platform wasn't linked to it
         if (itTeleports && linkedPortal == null) itTeleports = false;
 
         //Coroutine of movement
@@ -166,7 +166,7 @@ public class PlatformEditor : MonoBehaviour {
                 transform.position = new Vector3 (x, y, transform.position.z);
             }
 
-            //fixes the platform position to eliminate unwanted decimals
+            //fixes the platform position to eliminate unwanted decimal positions
 
             transform.position = new Vector3 (originalPosition.x + displacementHorizontalUnits, originalPosition.y + displacementVerticalUnits, originalPosition.z);
 
@@ -255,7 +255,7 @@ public class PlatformEditor : MonoBehaviour {
         if (itMoves) {
             Gizmos.color = Color.red;
             Gizmos.DrawWireCube (new Vector3 (transform.position.x + displacementHorizontalUnits + transform.localScale.x / 2, transform.position.y + displacementVerticalUnits - transform.localScale.y / 2, 4), new Vector3 (transform.localScale.x, transform.localScale.y, 1));
-            Gizmos.DrawLine (transform.position, new Vector3 (transform.position.x + displacementHorizontalUnits, transform.position.y + displacementVerticalUnits, linkedPortal.transform.position.z));
+            Gizmos.DrawLine (transform.position, new Vector3 (transform.position.x + displacementHorizontalUnits, transform.position.y + displacementVerticalUnits, transform.position.z));
 
         }
 

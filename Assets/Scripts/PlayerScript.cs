@@ -14,6 +14,7 @@ public class PlayerScript : MonoBehaviour {
     /////////////////////////Components///////////////
     private Rigidbody2D physics;
     private Animator animate;
+    private CapsuleCollider2D hitbox;
 
     /////////////////////////Variables with predifined values///////////////
 
@@ -77,9 +78,18 @@ public class PlayerScript : MonoBehaviour {
     public LayerMask whatIsGround;
     private bool isGrounded;
 
+    [Tooltip ("Allows player to hold down 'Crouch' button, to get down of a platform")]
+    public bool canGetDown;
+    [Tooltip ("How much seconds the player has to hold the button to trasspass the platform")]
+    public float getDownChargeMax;
+    private float getDownCharge;
+
+    private GameObject PlatformUnder;
+
     /////////////////////////////Controls////////////////////////////////
     private string jumpBtn;
     private string WalkBtn;
+    private string crouchBtn;
 
     /////////////////////////////Health////////////////////////////////
     [Space (5)]
@@ -105,6 +115,7 @@ public class PlayerScript : MonoBehaviour {
 
         //link components
         physics = GetComponent<Rigidbody2D> ();
+        hitbox = GetComponent<CapsuleCollider2D> ();
         animate = GetComponentInChildren<Animator> ();
 
         //Control mapping determined by which player is in control 
@@ -113,16 +124,20 @@ public class PlayerScript : MonoBehaviour {
 
                 jumpBtn = "Player1Jump";
                 WalkBtn = "Player1Horizontal";
+                crouchBtn = "Player1Crouch";
+
                 break;
 
             case Players.player2:
                 jumpBtn = "Player2Jump";
                 WalkBtn = "Player2Horizontal";
+                crouchBtn = "Player2Crouch";
                 break;
         }
 
         //converts seconds to frames
         jumpChargeTimer = jumpChargeTimer * 60;
+        getDownChargeMax = getDownChargeMax * 60;
 
         //fill the healthbar
         itLives = true;
@@ -197,6 +212,32 @@ public class PlayerScript : MonoBehaviour {
                     StartCoroutine (jumpCoroutine);
 
                 }
+
+                //////////////////////////////////Get Down Conditions///////////////////////////////////
+                //if the player can get down of platforms 
+                if (canGetDown) {
+
+                    if (Input.GetButtonDown (crouchBtn)) {
+                        getDownCharge = 0;
+                        StopCoroutine (GetDown (transform.parent.gameObject));
+                        PlatformUnder = null;
+                    }
+
+                    if (Input.GetButton (crouchBtn) && PlatformUnder == null && getDownCharge < getDownChargeMax) {
+                        getDownCharge++;
+
+                        //get down of the platform if the charge has been reached and the platform is just 1 unit of height
+
+                        if (getDownCharge >= getDownChargeMax && transform.parent.gameObject.transform.localScale.y <= 1) {
+                            StartCoroutine (GetDown (transform.parent.gameObject));
+                        }
+
+                    }
+                    if (Input.GetButtonUp (crouchBtn)) {
+                        getDownCharge = 0;
+
+                    }
+                }
             } //closes the grounded condition
 
             //the player fell down or escaped the gameSpace and its life will drain on a second
@@ -227,6 +268,15 @@ public class PlayerScript : MonoBehaviour {
         jumpCharge = ChangeNumberScale (jumpCharge, 0, jumpChargeTimer, jumpBoostInterval.x, jumpBoostInterval.y);
         physics.AddForce (new Vector2 (0, jumpForce * jumpCharge));
         jumpCharge = 0;
+        yield return null;
+    }
+    /////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////
+    IEnumerator GetDown (GameObject platform) {
+
+        hitbox.isTrigger = true;
+        PlatformUnder = platform;
         yield return null;
     }
 
@@ -274,6 +324,14 @@ public class PlayerScript : MonoBehaviour {
         if (collider.gameObject.CompareTag ("Platforms")) {
             transform.parent = null;
         }
+
+        //detects if the player got down of a platform
+
+        if (collider.gameObject == PlatformUnder) {
+            hitbox.isTrigger = false;
+            PlatformUnder = null;
+        }
+
     } //closes method OnTrigger exit
     /////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////
@@ -324,6 +382,17 @@ public class PlayerScript : MonoBehaviour {
         transform.position = spawnPosition;
         physics.velocity = new Vector3 (0, 0, 0);
         yield return null;
+    }
+    /////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////
+    void OnDrawGizmosSelected () {
+
+        if (groundCheck == null) return;
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere (groundCheck.position, groundCheckRadius);
+
     }
     /////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////
