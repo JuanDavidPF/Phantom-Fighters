@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &995266101495342803
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6520148820015904237}
+  m_Layer: 0
+  m_Name: DamageZone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6520148820015904237
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 995266101495342803}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.15, y: 1.18, z: -3.8003194}
+  m_LocalScale: {x: 0.8, y: 0.7619048, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2396740891944584393}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2396740891944584395
 GameObject:
   m_ObjectHideFlags: 0
@@ -33,6 +63,7 @@ Transform:
   - {fileID: 7579993637312159402}
   - {fileID: 2396740893704846697}
   - {fileID: 2396740892049675752}
+  - {fileID: 6520148820015904237}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -51,11 +82,11 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 20
+  m_GravityScale: 17
   m_Material: {fileID: 6200000, guid: 38b74c8966906b34cbd14d40b5306a76, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!70 &2396740891944584392
 CapsuleCollider2D:
@@ -70,8 +101,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 1}
-  m_Size: {x: 1.06, y: 2}
+  m_Offset: {x: 0, y: 1.24}
+  m_Size: {x: 1.06, y: 2.46}
   m_Direction: 0
 --- !u!114 &2396740891944584399
 MonoBehaviour:
@@ -87,7 +118,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isGamePaused: 0
   isOutOfBounds: 0
-  playerIndex: 0
+  playerIndex: 1
   character: 1
   moveSpeed: 9
   isFacingRight: 1
@@ -95,14 +126,28 @@ MonoBehaviour:
   jumpChargeTimer: 0.5
   jumpBoostInterval: {x: 100, y: 170}
   groundCheck: {fileID: 2396740892049675752}
-  groundCheckRadius: 0.3
+  groundCheckRadius: 0.325
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
+  canGetDown: 1
+  getDownChargeMax: 3
   lives: 3
-  maxHealth: 2000
+  maxHealth: 4000
   healthBar: {fileID: 0}
-  respawnCountdown: 3
+  respawnCountdown: 2
+  itLives: 0
+  attackPoint: {fileID: 6520148820015904237}
+  attackRange: 0.89
+  whatIsEnemy:
+    serializedVersion: 2
+    m_Bits: 512
+  lightAttackDamage: 0
+  midAttackDamage: 0
+  heavyAttackDamage: 0
+  lightAttackRate: 0
+  midAttackRate: 0
+  heavyAttackRate: 0
 --- !u!1 &2396740892049675753
 GameObject:
   m_ObjectHideFlags: 0
@@ -128,7 +173,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2396740892049675753}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.152, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2396740891944584393}
@@ -177,7 +222,7 @@ Transform:
   m_GameObject: {fileID: 2396740893704846699}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.2558, y: 1.2558, z: 1.2558}
   m_Children: []
   m_Father: {fileID: 2396740891944584393}
   m_RootOrder: 1
@@ -200,7 +245,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -220,7 +265,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 3747089691192616674, guid: 1c6294caf84933343ab54227ae4f8b2f,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -293,7 +338,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6295981730453231675}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.548, z: 0}
+  m_LocalPosition: {x: 0, y: 2.075, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2396740891944584393}

@@ -6,8 +6,12 @@ public class OutOfBoundsDetection : MonoBehaviour {
 
     //detecta a que se un jugador se haya salido de los limites
     void OnTriggerEnter2D (Collider2D player) {
+
         if (player.gameObject.CompareTag ("Player")) {
-            player.GetComponent<PlayerScript> ().isOutOfBounds = true;
+
+            PlayerScript playerParameters = player.GetComponent<PlayerScript> ();
+
+            playerParameters.isOutOfBounds = true;
 
         }
 
