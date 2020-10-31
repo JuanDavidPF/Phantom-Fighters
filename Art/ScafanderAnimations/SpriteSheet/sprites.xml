@@ -1,0 +1,41 @@
+<TextureAtlas imagePath="sprites.png">
+	<SubTexture name="1.png" x="976" y="0" width="240" height="270"/>
+	<SubTexture name="10.png" x="0" y="786" width="370" height="220"/>
+	<SubTexture name="11.png" x="442" y="0" width="290" height="330"/>
+	<SubTexture name="12.png" x="0" y="1290" width="340" height="250"/>
+	<SubTexture name="13 light.png" x="1128" y="1300" width="240" height="260"/>
+	<SubTexture name="14 light.png" x="1148" y="856" width="230" height="280"/>
+	<SubTexture name="15 light.png" x="0" y="0" width="440" height="260"/>
+	<SubTexture name="16 light c.png" x="0" y="524" width="400" height="260"/>
+	<SubTexture name="17 Medium.png" x="1128" y="1300" width="240" height="260"/>
+	<SubTexture name="18 Medium.png" x="1218" y="0" width="220" height="260"/>
+	<SubTexture name="19 Medium.png" x="704" y="332" width="250" height="260"/>
+	<SubTexture name="2.png" x="1128" y="1300" width="240" height="260"/>
+	<SubTexture name="20 Medium.png" x="664" y="786" width="250" height="260"/>
+	<SubTexture name="21 Medium C.png" x="624" y="1290" width="280" height="260"/>
+	<SubTexture name="21 Medium.png" x="312" y="1542" width="310" height="260"/>
+	<SubTexture name="22 high.png" x="624" y="1290" width="280" height="260"/>
+	<SubTexture name="23 high.png" x="1360" y="1562" width="220" height="320"/>
+	<SubTexture name="24 high.png" x="1198" y="272" width="220" height="350"/>
+	<SubTexture name="25 high.png" x="624" y="1552" width="260" height="340"/>
+	<SubTexture name="26 High.png" x="734" y="0" width="240" height="330"/>
+	<SubTexture name="27 high c.png" x="0" y="1542" width="310" height="260"/>
+	<SubTexture name="27 high.png" x="0" y="1008" width="360" height="280"/>
+	<SubTexture name="28 special.png" x="1218" y="0" width="220" height="260"/>
+	<SubTexture name="29 special.png" x="1380" y="624" width="210" height="280"/>
+	<SubTexture name="3.png" x="886" y="1552" width="240" height="260"/>
+	<SubTexture name="30 special.png" x="1370" y="1138" width="210" height="280"/>
+	<SubTexture name="31 special.png" x="956" y="332" width="240" height="260"/>
+	<SubTexture name="32 special.png" x="402" y="524" width="300" height="260"/>
+	<SubTexture name="33 special.png" x="0" y="262" width="410" height="260"/>
+	<SubTexture name="34 special.png" x="402" y="524" width="300" height="260"/>
+	<SubTexture name="35 special.png" x="402" y="524" width="300" height="260"/>
+	<SubTexture name="36 special.png" x="956" y="332" width="240" height="260"/>
+	<SubTexture name="37 special.png" x="1370" y="1138" width="210" height="280"/>
+	<SubTexture name="4.png" x="1128" y="1562" width="230" height="270"/>
+	<SubTexture name="5.png" x="916" y="594" width="240" height="260"/>
+	<SubTexture name="6.png" x="906" y="1048" width="240" height="250"/>
+	<SubTexture name="7.png" x="342" y="1290" width="250" height="250"/>
+	<SubTexture name="8.png" x="362" y="1008" width="300" height="280"/>
+	<SubTexture name="9.png" x="0" y="1804" width="300" height="230"/>
+</TextureAtlas>

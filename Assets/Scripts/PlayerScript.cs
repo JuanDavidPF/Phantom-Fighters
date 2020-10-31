@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 
 [SelectionBase]
@@ -57,7 +58,7 @@ public class PlayerScript : MonoBehaviour {
     public float jumpForce;
 
     [Tooltip ("Determines how many seconds the jump button needs to be pressed to reach max height jump")]
-    [Range (0, 5)]
+    [Range (0, 1)]
     public float jumpChargeTimer;
     private float jumpCharge;
     private IEnumerator jumpCoroutine;
@@ -96,6 +97,8 @@ public class PlayerScript : MonoBehaviour {
     private string crouchBtn;
     private string lightAttackBtn;
     private string midAttackBtn;
+    private string heavyAttackBtn;
+    private string ultiAttackBtn;
 
     /////////////////////////////Health////////////////////////////////
     [Space (5)]
@@ -133,15 +136,15 @@ public class PlayerScript : MonoBehaviour {
     [Space (5)]
 
     [Tooltip ("What is the base damage of the player's light attacks")]
-    [Range (100, 1800)]
+    [Range (0, 1800)]
     public int lightAttackDamage;
 
     [Tooltip ("What is the base damage of the player's mid attacks")]
-    [Range (100, 1800)]
+    [Range (0, 1800)]
     public int midAttackDamage;
 
     [Tooltip ("What is the base damage of the player's heavy attacks")]
-    [Range (100, 1800)]
+    [Range (0, 1800)]
     public int heavyAttackDamage;
 
     private int attackDamage;
@@ -161,14 +164,39 @@ public class PlayerScript : MonoBehaviour {
     [Range (0.1f, 10)]
     public float heavyAttackRate;
 
+    [Header ("Attack Trigger")]
+    [Space (5)]
+    [Tooltip ("How many seconds the code waits after pressing the atack btn to detect enemies around and make the hit")]
+    [Range (0.1f, 3)]
+    public float lightFrameTrigger;
+
+    [Tooltip ("How many seconds the code waits after pressing the atack btn to detect enemies around and make the hit")]
+    [Range (0.1f, 3)]
+    public float midFrameTrigger;
+
+    [Tooltip ("How many seconds the code waits after pressing the atack btn to detect enemies around and make the hit")]
+    [Range (0.1f, 3)]
+    public float heavyFrameTrigger;
+
     private float attackRate;
     private float attackCooldown;
+    private float frameHit;
+
+    //ulti
+    [Header ("Ultimate")]
+    [Space (5)]
+    private int ultProgress;
+    [Tooltip ("Links the Ult level to an interface ultbar")]
+    public UltiBar ultiBar;
+    private bool ulting;
 
     //FX
     [Space (5)]
     [Header ("FX")]
-    [Tooltip ("Object that gives the position of the center of the damage zone")]
+    [Tooltip ("object that lights up when the player is hurted")]
     public GameObject hurtedLight;
+
+    public GameObject cameraTarget;
 
     /////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////
@@ -191,6 +219,8 @@ public class PlayerScript : MonoBehaviour {
                 crouchBtn = "Player1Crouch";
                 lightAttackBtn = "Player1LightAttack";
                 midAttackBtn = "Player1MidAttack";
+                heavyAttackBtn = "Player1HeavyAttack";
+                ultiAttackBtn = "Player1Ulti";
                 break;
 
             case Players.player2:
@@ -199,6 +229,8 @@ public class PlayerScript : MonoBehaviour {
                 crouchBtn = "Player2Crouch";
                 lightAttackBtn = "Player2LightAttack";
                 midAttackBtn = "Player2MidAttack";
+                heavyAttackBtn = "Player2HeavyAttack";
+                ultiAttackBtn = "Player2Ulti";
                 break;
         }
 
@@ -211,6 +243,7 @@ public class PlayerScript : MonoBehaviour {
         health = maxHealth;
 
         if (healthBar != null) healthBar.SetMaxHealth (maxHealth);
+        if (ultiBar != null) ultiBar.clearBar ();
 
     } //closes start method
 
@@ -326,6 +359,23 @@ public class PlayerScript : MonoBehaviour {
 
                     attackCooldown = Time.time + 1f / attackRate;
                 }
+            } else if (Input.GetButtonDown (heavyAttackBtn)) {
+
+                if (Time.time >= attackCooldown) {
+                    StartCoroutine (Attack (3));
+
+                    attackCooldown = Time.time + 1f / attackRate;
+                }
+            }
+
+            //the player activates its ultimate
+
+            if (Input.GetButtonDown (ultiAttackBtn)) {
+                if (ultProgress >= 100) ulting = true;
+            }
+
+            if (ulting) {
+                StartCoroutine (UltiMove ());
             }
 
             //the player fell down or escaped the gameSpace and its life will drain on a second
@@ -437,22 +487,29 @@ public class PlayerScript : MonoBehaviour {
 
                 attackDamage = lightAttackDamage;
                 attackRate = lightAttackRate;
+                frameHit = lightFrameTrigger;
                 break;
 
             case 2:
                 attackDamage = midAttackDamage;
                 attackRate = midAttackRate;
+                frameHit = midFrameTrigger;
                 break;
 
             case 3:
                 attackDamage = heavyAttackDamage;
                 attackRate = heavyAttackRate;
+                frameHit = heavyFrameTrigger;
                 break;
         }
 
         //activates the attack animation
         animate.SetTrigger ("attack");
         animate.SetInteger ("attackForce", attackForce);
+
+        //wait for animation timing before making damage
+
+        yield return new WaitForSeconds (frameHit);
 
         //detect anemies in range of attack
         Collider2D[] enemiesInDamageZone = Physics2D.OverlapCircleAll (attackPoint.position, attackRange, whatIsEnemy);
@@ -475,26 +532,51 @@ public class PlayerScript : MonoBehaviour {
                     // float knockbackForce = ChangeNumberScale (attackDamage, 100, enemyScript.maxHealth, 400, 1200);
 
                     //knockback for health state
-                    float knockbackForce = ChangeNumberScale (enemyScript.health, enemyScript.maxHealth, 0, 400, 1200);
+                    float knockbackForce = ChangeNumberScale (enemyScript.health, enemyScript.maxHealth, 0, 400, 1000);
 
                     if (isFacingRight) {
                         knockbackForce = Mathf.Abs (knockbackForce);
                         if (enemyScript.isFacingRight) enemyScript.FlipSprite ();
-                        StartCoroutine (enemyScript.Knockback (knockbackForce, Mathf.Abs (knockbackForce) * 1.5f));
+
                     } else {
                         knockbackForce = Mathf.Abs (knockbackForce) * -1;
                         if (!enemyScript.isFacingRight) enemyScript.FlipSprite ();
-                        StartCoroutine (enemyScript.Knockback (knockbackForce, Mathf.Abs (knockbackForce) * 1.5f));
                     }
+
+                    StartCoroutine (enemyScript.Knockback (knockbackForce, Mathf.Abs (knockbackForce) * 1.5f));
 
                     //calculates if the oponent is dead and ignores any colission
                     if (enemyScript.health <= 0) {
 
                         StartCoroutine (enemyScript.PlayerCollides (hitbox, true));
                     }
+
+                    //adds point to the ultbar               
+                    ultProgress += attackDamage / 15;
+                    if (ultiBar != null) ultiBar.SetUltValue (ultProgress);
                 } //condition if the enemmy is alive
             } //condition if the player it's not himself
+
         }
+        yield return null;
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////
+
+    IEnumerator UltiMove () {
+
+        if (ultProgress == 100) animate.SetBool ("ulting", true);
+
+        ultProgress -= 1;
+        if (ultiBar) ultiBar.SetUltValue (ultProgress);
+
+        if (ultProgress <= 0) {
+            ulting = false;
+            ultProgress = 0;
+        }
+
         yield return null;
     }
 
@@ -538,7 +620,7 @@ public class PlayerScript : MonoBehaviour {
         switch (character) {
 
             case Characters.Scafander:
-                physics.AddForce (new Vector2 (horizontalForceReceived, verticalForceReceived * 1.5f));
+                physics.AddForce (new Vector2 (horizontalForceReceived, verticalForceReceived * 1.3f));
                 break;
 
             case Characters.Kiryl:
@@ -573,7 +655,10 @@ public class PlayerScript : MonoBehaviour {
             }
         }
 
-        Debug.Log (lives);
+        //the camera will stop following the position of the dead player
+
+        int indexOnCamera = cameraTarget.GetComponent<CinemachineTargetGroup> ().FindMember (gameObject.transform);
+        cameraTarget.GetComponent<CinemachineTargetGroup> ().m_Targets[indexOnCamera].weight = 0;
 
         yield return null;
     }
@@ -608,6 +693,10 @@ public class PlayerScript : MonoBehaviour {
 
         //enables to collide with the oponent again
         if (enemyHitbox != null) StartCoroutine (PlayerCollides (enemyHitbox, false));
+
+        //the camera starts following the player again
+        int indexOnCamera = cameraTarget.GetComponent<CinemachineTargetGroup> ().FindMember (gameObject.transform);
+        cameraTarget.GetComponent<CinemachineTargetGroup> ().m_Targets[indexOnCamera].weight = 1;
 
         yield return null;
     }
